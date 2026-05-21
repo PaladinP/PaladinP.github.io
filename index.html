@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nkosinathi Lubisi | Software Engineer</title>
+    <style>
+        :root {
+            --bg-base: #030303;
+            --text-primary: #f8fafc;
+            --text-secondary: #8b949e;
+            --accent-color: #38bdf8;
+            --card-bg: rgba(20, 20, 25, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-hover-border: rgba(56, 189, 248, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            /* Subtle dark radial glow in the center */
+            background-image: radial-gradient(circle at 50% 0%, #171717 0%, #030303 70%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Entrance Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.5s; }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Dark Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 10;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--card-hover-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(56, 189, 248, 0.1);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.3rem;
+            color: #ffffff;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Interactive Buttons */
+        .btn-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.03);
+            color: #e2e8f0;
+            padding: 0.7rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            border: 1px solid var(--card-border);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--accent-color);
+            color: #ffffff;
+        }
+
+        /* Dark Theme Tags */
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            color: #94a3b8;
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            color: #94a3b8;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .status-completed {
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #34d399;
+        }
+        
+        .status-progress {
+            border-color: rgba(245, 158, 11, 0.3);
+            color: #fbbf24;
+        }
+
+        ul { list-style: none; }
+        ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+        }
+        ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #475569;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- MINI GAME CSS --- */
+        .code-bug {
+            position: fixed;
+            font-size: 2rem;
+            cursor: crosshair;
+            z-index: 9999;
+            user-select: none;
+            transition: transform 0.1s;
+        }
+        
+        .code-bug:active {
+            transform: scale(0.8);
+        }
+
+        #score-board {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #fff;
+            z-index: 10000;
+            display: none;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div id="score-board">Bugs Squashed: <span id="bug-score">0</span></div>
+
+<div class="container">
+    <header class="glass-card animate-in delay-1">
+        <h1>Nkosinathi Lubisi</h1>
+        <div class="subtitle">Software Engineer & Tech Educator</div>
+        <p>
+            I'm a third-year Computer Science and Informatics student at the University of Johannesburg. My approach to software engineering is rooted in understanding how systems work under the hood—whether that means designing resilient backend architectures, mitigating web vulnerabilities, or mapping out relational databases.
+        </p>
+        <p>
+            Beyond writing code, I am deeply passionate about teaching it. As a university marker, assistant, and private tutor, I spend a lot of my time breaking down complex logic into accessible concepts. When I'm not studying or teaching, you'll probably find me writing poetry, playing the piano, or tackling logic puzzles.
+        </p>
+        <div class="btn-container">
+            <a href="mailto:lubisinkosinathi11@gmail.com" class="btn">Email Me</a>
+            <a href="https://github.com/PaladinP" target="_blank" class="btn">GitHub</a>
+            <button id="debug-btn" class="btn">Initialize Debug Mode</button>
+        </div>
+    </header>
+
+    <section class="animate-in delay-2">
+        <h2>Featured Work</h2>
+        <div class="glass-card">
+            <span class="status-badge status-completed">Completed</span>
+            <h3>Trade-Optima</h3>
+            <div class="tag-container">
+                <span class="tag">JavaFX</span>
+                <span class="tag">Mathematical Modeling</span>
+                <span class="tag">Academic project on data structures and image processing</span>
+            </div>
+            <p>Merging finance and software engineering, Trade-Optima is a desktop application built for technical market analysis. We designed the backend mathematical models to detect structural similarities in financial data, allowing the system to reliably identify trading chart patterns. Packaged and deployed as a compiled executable JAR.</p>
+            <div class="btn-container">
+                <a href="https://youtu.be/aYEuNufW6zU" target="_blank" class="btn">Watch Demo</a>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <span class="status-badge status-completed">Completed</span>
+            <h3>Creatr</h3>
+            <div class="tag-container">
+                <span class="tag">C# (.NET)</span>
+                <span class="tag">ASP.NET</span>
+                <span class="tag">Database Architecture</span>
+            </div>
+            <p>A full-stack collaborative effort. I led a 4-person team to build this multi-user e-commerce art marketplace. My primary role was architecting the backend logic that powers the platform—handling everything from product uploads and user authentication to the underlying cart and order processing systems.</p>
+            <div class="btn-container">
+                <a href="https://youtu.be/iq2SmmUtT9s" target="_blank" class="btn">Watch Demo</a>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <span class="status-badge">Incubation Phase</span>
+            <h3>Mall Tycoon</h3>
+            <div class="tag-container">
+                <span class="tag">Enterprise Architecture</span>
+                <span class="tag">B2B Systems</span>
+                <span class="tag">Financial Automation</span>
+            </div>
+            <p>Stepping into professional enterprise solutions. Selected through an incubation programme, Mall Tycoon is a B2B commercial facility management system. I am currently mapping out the backend architecture to automate complex operational workflows and financial reporting for large-scale properties.</p>
+            <div class="btn-container">
+            </div>
+        </div>
+    </section>
+
+    <section class="animate-in delay-3">
+        <h2>Mentorship & Leadership</h2>
+        
+        <div class="glass-card">
+            <h3>Computer Science A1 (CSC1A1) Marker & Assistant</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">University of Johannesburg | Jan 2025 – Present</p>
+            <ul>
+                <li>Evaluate practical assignments and provide direct, constructive feedback on C++ code structure and logic.</li>
+                <li>Ensure students understand the fundamental principles, rather than just getting the code to run.</li>
+            </ul>
+            
+            <h3 style="margin-top: 2.5rem;">Private Tech Educator</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Independent | Jan 2025 – Present</p>
+            <ul>
+                <li>Conduct one-on-one sessions focusing on core programming paradigms and independent problem-solving.</li>
+                <li>Maintained a 100% student pass rate across all students tutored, helping peers achieve significant academic improvements.</li>
+            </ul>
+
+            <h3 style="margin-top: 2.5rem;">Debug Ninjas Collaborative Group</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Academic & Independent | Mar 2026 – Present</p>
+            <ul>
+                <li>Collaborate with a tight-knit engineering team to develop, manage, and version-control shared system repositories.</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer class="animate-in delay-3">
+        <p>&copy; 2026 Nkosinathi Lubisi. Hosted on GitHub Pages.</p>
+    </footer>
+</div>
+
+<script>
+    let isDebugging = false;
+    let score = 0;
+    let gameInterval;
+    let hasWon = false;
+
+    const debugBtn = document.getElementById('debug-btn');
+    const scoreBoard = document.getElementById('score-board');
+    const scoreSpan = document.getElementById('bug-score');
+
+    debugBtn.addEventListener('click', () => {
+        isDebugging = !isDebugging;
+        
+        if(isDebugging) {
+            // Start Game
+            debugBtn.innerHTML = 'Stop Debugging';
+            debugBtn.style.borderColor = '#ef4444';
+            debugBtn.style.color = '#ef4444';
+            scoreBoard.style.display = 'block';
+            hasWon = false;
+            score = 0;
+            scoreSpan.innerText = score;
+            gameInterval = setInterval(spawnBug, 1200);
+        } else {
+            // End Game
+            debugBtn.innerHTML = 'Initialize Debug Mode';
+            debugBtn.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+            debugBtn.style.color = '#e2e8f0';
+            scoreBoard.style.display = 'none';
+            clearInterval(gameInterval);
+            document.querySelectorAll('.code-bug').forEach(bug => bug.remove());
+        }
+    });
+
+    function spawnBug() {
+        if(!isDebugging) return;
+
+        const bug = document.createElement('div');
+        bug.innerHTML = '🐛';
+        bug.className = 'code-bug';
+        
+        // Random position
+        const x = Math.random() * (window.innerWidth - 50);
+        const y = Math.random() * (window.innerHeight - 50);
+        
+        bug.style.left = `${x}px`;
+        bug.style.top = `${y}px`;
+        
+        // Slight random rotation
+        const rotation = Math.random() * 360;
+        bug.style.transform = `rotate(${rotation}deg)`;
+
+        // Click to squash
+        bug.addEventListener('mousedown', function() {
+            this.innerHTML = '💥';
+            this.style.pointerEvents = 'none';
+            score++;
+            scoreSpan.innerText = score;
+            
+            // Check win condition
+            if(score === 10 && !hasWon) {
+                hasWon = true;
+                setTimeout(() => {
+                    alert("System Secured! 🛡️ You squashed 10 bugs. You truly are a Debug Ninja!");
+                }, 100);
+            }
+
+            // Remove bug after explosion
+            setTimeout(() => {
+                this.remove();
+            }, 300);
+        });
+
+        document.body.appendChild(bug);
+
+        // Auto remove bugs if missed after 4 seconds
+        setTimeout(() => {
+            if(document.body.contains(bug) && bug.innerHTML !== '💥') {
+                bug.remove();
+            }
+        }, 4000);
+    }
+</script>
+</body>
+</html>
